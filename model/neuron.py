@@ -14,8 +14,8 @@ class Neuron(AbstractNeuron):
         self.num=Neuron.n
         Neuron.n+=1
 
-    def add_synaps(self, other_neuron):
-        self.synapses.append(other_neuron)
+    def add_synaps(self, sygnal):
+        self.synapses.append(sygnal)
         self.weights.append(0.0)
 
     def process(self):
