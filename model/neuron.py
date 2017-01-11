@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vit'
 
-from model.base_classes import AbstractNeuron
+from model.base_classes_old import AbstractNeuron
 
 class Neuron(AbstractNeuron):
     n=0

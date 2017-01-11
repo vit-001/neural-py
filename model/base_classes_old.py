@@ -21,4 +21,4 @@ class AbstractNeuron(Sygnal):
 
 
 if __name__ == "__main__":
-    pass
+    a=AbstractNeuron()
