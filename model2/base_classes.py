@@ -9,6 +9,10 @@ class AbstractSignal:
 class AbstractNeuron(AbstractSignal):
     def add_sinaps(self, other, weight=0.0):
         pass
+    def process(self):
+        pass
+    def activation(self, summa:float)->float:
+        return 0.0
 
 
 class Neuron(AbstractNeuron):
@@ -18,10 +22,20 @@ class Neuron(AbstractNeuron):
         self._synapses=list()
         Neuron._n+=1
         self._num=Neuron._n
+        self._signal=0.0
 
     def add_synaps(self, source:AbstractNeuron, weight=0.0):
         self._synapses.append((source,weight))
 
+    def process(self):
+        summa=0.0
+        for (signal,weight) in self._synapses:
+            summa+=signal.signal*weight
+        self._signal=self.activation(summa)
+
+    @property
+    def signal(self):
+        return self._signal
 
     def __repr__(self):
         return self._num.__str__()
