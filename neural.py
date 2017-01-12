@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Nikitin'
 
-import model.neuron as n
+import model.neuron_old as n
 
 if __name__ == "__main__":
     n1=n.Neuron()
