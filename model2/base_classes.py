@@ -44,6 +44,9 @@ class BaseNeuron(AbstractNeuron):
         return self._num.__str__()
 
 
+class BaseNetwork(AbstractNetwork):
+    pass
+
 
 if __name__ == "__main__":
     pass
