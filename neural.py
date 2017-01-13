@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Nikitin'
 
-import model.neuron_old as n
+from model.perceptron import Perceptron
+
+class Test():
+    def __init__(self):
+        pass
+
 
 if __name__ == "__main__":
-    n1=n.Neuron()
-    print(n1)
+    t=Test()
