@@ -20,6 +20,9 @@ class AbstractNeuron(AbstractSignal):
 class AbstractNetwork:
     pass
 
+class AbstractData:
+    pass
+
 class BaseSignal(AbstractSignal):
     _n = 0
     def __init__(self):
@@ -58,6 +61,9 @@ class BaseNeuron(AbstractNeuron):
 
 
 class BaseNetwork(AbstractNetwork):
+    pass
+
+class BaseData(AbstractData):
     pass
 
 
