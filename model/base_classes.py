@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Nikitin'
 
+from typing import Tuple,List
+
 class AbstractSignal:
     # @property
     # def signal(self):
@@ -21,7 +23,12 @@ class AbstractNetwork:
     pass
 
 class AbstractData:
-    pass
+    def get_inputs_count(self)->int:
+        return 0
+    def get_outputs_count(self)->int:
+        return 0
+    def __next__(self)->Tuple(List(int),List(int)): #intputs list, outputs list
+        raise StopIteration
 
 class BaseSignal(AbstractSignal):
     _n = 0
@@ -61,7 +68,10 @@ class BaseNeuron(AbstractNeuron):
 
 
 class BaseNetwork(AbstractNetwork):
-    pass
+    def training(self,data:AbstractData):
+        pass
+    def process(self, inputs:List(int))->List(int):
+        pass
 
 class BaseData(AbstractData):
     pass

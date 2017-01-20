@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vit'
 
-from model.base_classes import BaseNetwork,BaseSignal
+from model.base_classes import BaseNetwork,BaseSignal,AbstractData
 from model.neuron import Neuron
+from typing import Tuple,List
 
 class Perceptron(BaseNetwork):
     def __init__(self, inputs:int,hidden:list, outputs:int):
@@ -24,7 +25,11 @@ class Perceptron(BaseNetwork):
         self._output=[Neuron() for i in range(outputs)]
         add_synapses(prev_layer,self._output)
 
-    def process(self,data:list)->list:
+    def training(self,data:AbstractData):
+        pass
+
+
+    def process(self,data:List(int))->List(int):
         if len(data)!=len(self._input):
             raise RuntimeError('Perceptron: неправильное количество данных на входе')
         for inp, value in zip(self._input,data):
