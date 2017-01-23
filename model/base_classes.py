@@ -27,7 +27,7 @@ class AbstractData:
         return 0
     def get_outputs_count(self)->int:
         return 0
-    def __next__(self)->Tuple(List(int),List(int)): #intputs list, outputs list
+    def __next__(self)->tuple([list(),list()]): #intputs list, outputs list
         raise StopIteration
 
 class BaseSignal(AbstractSignal):
@@ -70,7 +70,7 @@ class BaseNeuron(AbstractNeuron):
 class BaseNetwork(AbstractNetwork):
     def training(self,data:AbstractData):
         pass
-    def process(self, inputs:List(int))->List(int):
+    def process(self, inputs:list())->list():
         pass
 
 class BaseData(AbstractData):

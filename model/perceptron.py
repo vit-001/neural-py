@@ -29,7 +29,7 @@ class Perceptron(BaseNetwork):
         pass
 
 
-    def process(self,data:List(int))->List(int):
+    def process(self,data:list())->list():
         if len(data)!=len(self._input):
             raise RuntimeError('Perceptron: неправильное количество данных на входе')
         for inp, value in zip(self._input,data):

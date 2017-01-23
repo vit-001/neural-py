@@ -5,13 +5,21 @@ from model.base_classes import AbstractNeuron, AbstractSignal, BaseNeuron
 import math
 
 class Neuron(BaseNeuron):
+    def __init__(self, alfa=1.0):
+        super().__init__()
+        self._alfa=alfa
+
+
     def activation(self, summa: float) -> float:
         # if summa <= -0.5:
         #     return 0.0
         # if summa >= 0.5:
         #     return 1.0
         # return summa + 0.5
-        return math.tanh(summa)
+
+        # return math.tanh(summa)
+
+        return  1/(1+math.exp(-2.0*self._alfa*summa))
 
 
 if __name__ == "__main__":
