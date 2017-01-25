@@ -1,9 +1,16 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vit'
 
-from model.base_classes import BaseNetwork,BaseSignal,AbstractData
+from model.base_classes import BaseNetwork,BaseSignal,AbstractTrainingData
 from model.neuron import Neuron
 from typing import Tuple,List
+
+def ErrorFunction(list_a:list(),list_b:list)->float:
+    summa=0.0
+    for a,b in zip(list_a,list_b):
+        summa+=(a-b)**2
+    return summa/2.0
+
 
 class Perceptron(BaseNetwork):
     def __init__(self, inputs:int,hidden:list, outputs:int):
@@ -25,9 +32,16 @@ class Perceptron(BaseNetwork):
         self._output=[Neuron() for i in range(outputs)]
         add_synapses(prev_layer,self._output)
 
-    def training(self,data:AbstractData):
-        pass
-
+    def training(self, data:AbstractTrainingData, training_speed:float=0.1):
+        if data.get_inputs_count()!=len(self._input):
+            raise RuntimeError('Неправильное количество входных данных')
+        if data.get_outputs_count()!=len(self._output):
+            raise RuntimeError('Неправильное количество выходных данных')
+        for (input,output) in data:
+            print(input,output)
+            result=self.process(input)
+            print(result)
+            print(ErrorFunction(output,result))
 
     def process(self,data:list())->list():
         if len(data)!=len(self._input):
@@ -48,20 +62,12 @@ class Perceptron(BaseNetwork):
 
 
 if __name__ == "__main__":
-    p=Perceptron(3,[3,2],3)
+    p=Perceptron(2,[3],1)
     print(p._input)
     print(p._hidden)
     print(p._output)
 
-    print(p.process([1.0,2.0,3.0]))
+    from model.data.xor_data import XorData
+    data=XorData()
 
-    for inp in p._input:
-        print(inp,inp.signal)
-
-    for layer in p._hidden:
-        for item in layer:
-            print(item,item.signal)
-
-    for out in p._output:
-        print(out,out.signal)
-
+    p.training(data)

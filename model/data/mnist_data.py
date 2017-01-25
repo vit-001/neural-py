@@ -3,10 +3,10 @@ __author__ = 'Nikitin'
 
 from struct import unpack
 
-from model.base_classes import BaseData
+from model.base_classes import BaseTrainingData
 
 
-class MnistData(BaseData):
+class MnistData(BaseTrainingData):
     def __init__(self, set_name:str):
         self.images = open('mnist/' + set_name + '-images.idx3-ubyte', 'rb')
         self.labels = open('mnist/' + set_name + '-labels.idx1-ubyte', 'rb')

@@ -2,6 +2,7 @@
 __author__ = 'Nikitin'
 
 from typing import Tuple,List
+from collections import Iterable
 
 class AbstractSignal:
     # @property
@@ -22,13 +23,11 @@ class AbstractNeuron(AbstractSignal):
 class AbstractNetwork:
     pass
 
-class AbstractData:
+class AbstractTrainingData(Iterable):
     def get_inputs_count(self)->int:
         return 0
     def get_outputs_count(self)->int:
         return 0
-    def __next__(self)->tuple([list(),list()]): #intputs list, outputs list
-        raise StopIteration
 
 class BaseSignal(AbstractSignal):
     _n = 0
@@ -68,12 +67,12 @@ class BaseNeuron(AbstractNeuron):
 
 
 class BaseNetwork(AbstractNetwork):
-    def training(self,data:AbstractData):
+    def training(self, data:AbstractTrainingData):
         pass
     def process(self, inputs:list())->list():
         pass
 
-class BaseData(AbstractData):
+class BaseTrainingData(AbstractTrainingData):
     pass
 
 
