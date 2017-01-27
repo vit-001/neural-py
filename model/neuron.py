@@ -28,7 +28,7 @@ if __name__ == "__main__":
     start = time.time()
     b = Neuron()
     neurons = list()
-    for i in range(1000000):
+    for i in range(10):
         qurrent = Neuron()
         b.add_synaps(qurrent, 1.0)
         qurrent.add_synaps(b)
@@ -41,3 +41,5 @@ if __name__ == "__main__":
     print(t2 - t1)
     b.process()
     print(time.time() - t2)
+
+    print(b._children)

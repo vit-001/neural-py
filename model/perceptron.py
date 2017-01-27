@@ -32,16 +32,36 @@ class Perceptron(BaseNetwork):
         self._output=[Neuron() for i in range(outputs)]
         add_synapses(prev_layer,self._output)
 
-    def training(self, data:AbstractTrainingData, training_speed:float=0.1):
+    def training(self, data:AbstractTrainingData, training_speed:float=0.1, debug=False):
         if data.get_inputs_count()!=len(self._input):
             raise RuntimeError('Неправильное количество входных данных')
         if data.get_outputs_count()!=len(self._output):
             raise RuntimeError('Неправильное количество выходных данных')
         for (input,output) in data:
-            print(input,output)
+
             result=self.process(input)
-            print(result)
-            print(ErrorFunction(output,result))
+            if debug :print(input,output,result)
+            if debug:print(ErrorFunction(output,result))
+
+            # output layer
+            for neuron, value in zip(self._output, output):
+
+                y=neuron.signal
+                delta=y*(1-y)*(value-y)
+                neuron.correct_weight(delta, training_speed)
+
+                # print(neuron, neuron.signal, value, delta)
+
+            # hidden layer
+            child_layer=self._output
+            for layer in reversed(self._hidden):
+                for neuron in layer:
+                    # print(neuron)
+                    y = neuron.signal
+                    delta=y*(1-y)*neuron._delta_from_childs
+                    neuron.correct_weight(delta, training_speed)
+
+
 
     def process(self,data:list())->list():
         if len(data)!=len(self._input):
@@ -63,11 +83,12 @@ class Perceptron(BaseNetwork):
 
 if __name__ == "__main__":
     p=Perceptron(2,[3],1)
-    print(p._input)
-    print(p._hidden)
-    print(p._output)
 
     from model.data.xor_data import XorData
     data=XorData()
+    p.training(data,debug=True)
+    for i in range(50000):
 
-    p.training(data)
+        p.training(data)
+    print('last pass')
+    p.training(data,debug=True)
