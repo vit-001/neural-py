@@ -4,6 +4,7 @@ __author__ = 'Vit'
 from model.base_classes import BaseNetwork,BaseSignal,AbstractTrainingData
 from model.neuron import Neuron
 from typing import Tuple,List
+from random import random
 
 def ErrorFunction(list_a:list(),list_b:list)->float:
     summa=0.0
@@ -18,7 +19,7 @@ class Perceptron(BaseNetwork):
         def add_synapses(prev_layer,current_layer):
             for neuron in current_layer:
                 for source in prev_layer:
-                    neuron.add_synaps(source)
+                    neuron.add_synaps(source,weight=(random()-0.5)*0.001)
 
         self._input=[BaseSignal() for i in range(inputs)]
 
@@ -32,7 +33,7 @@ class Perceptron(BaseNetwork):
         self._output=[Neuron() for i in range(outputs)]
         add_synapses(prev_layer,self._output)
 
-    def training(self, data:AbstractTrainingData, training_speed:float=0.1, debug=False):
+    def training(self, data:AbstractTrainingData, training_speed:float=0.5, debug=False):
         if data.get_inputs_count()!=len(self._input):
             raise RuntimeError('Неправильное количество входных данных')
         if data.get_outputs_count()!=len(self._output):
@@ -40,7 +41,7 @@ class Perceptron(BaseNetwork):
         for (input,output) in data:
 
             result=self.process(input)
-            if debug :print(input,output,result)
+            if debug :print(input,output,result,end=' ')
             if debug:print(ErrorFunction(output,result))
 
             # output layer
@@ -80,15 +81,29 @@ class Perceptron(BaseNetwork):
 
         return [item.signal for item in self._output]
 
+    def print(self):
+        for neuron in self._output:
+            print(neuron)
+            print(neuron._weight)
+        for layer in reversed(self._hidden):
+            for neuron in layer:
+                print(neuron)
+                print(neuron._weight)
 
 if __name__ == "__main__":
     p=Perceptron(2,[3],1)
 
+    p.print()
+    print()
+
     from model.data.xor_data import XorData
     data=XorData()
-    p.training(data,debug=True)
+    p.training(data,training_speed=0.5,debug=True)
     for i in range(50000):
 
         p.training(data)
     print('last pass')
     p.training(data,debug=True)
+
+    print()
+    p.print()
